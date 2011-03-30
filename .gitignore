@@ -1,4 +1,6 @@
+.*.swp
 *.gem
 .bundle
 Gemfile.lock
+out.txt
 pkg/*
