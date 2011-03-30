@@ -1,0 +1,6 @@
+= Confluence::Client - Ruby client for the Confluence XML::RPC API
+
+== Usage
+
+  TODO
+
