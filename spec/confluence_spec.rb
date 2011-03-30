@@ -76,8 +76,7 @@ describe "Confluence" do
 
     context "with unsuccessful login" do
       it "should raise XMLRPC::FaultException" do
-        pending("should raise XMLRPC::FaultException")
-        @confluence.should_receive(:login).with(@user, @pass).and_raise(XMLRPC::FaultException)
+        @confluence.should_receive(:login).with(@user, @pass).and_raise( XMLRPC::FaultException.new(:faultCode, :faultString) )
         lambda { @confluence.login(@user, @pass) }.should raise_error(XMLRPC::FaultException)
       end
     end
