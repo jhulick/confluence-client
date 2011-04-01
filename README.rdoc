@@ -1,6 +1,13 @@
-= Confluence::Client - Ruby client for the Confluence XML::RPC API
+= Confluence::Client - Ruby client for the Confluence XML::RPC API.
 
 == Usage
 
-  TODO
-
+  Confluence::Client.new(url) do |confluence|
+    
+    # Login
+    confluence.login(user, pass)
+    
+    # Logout
+    confluence.logout
+    
+  end 

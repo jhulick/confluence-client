@@ -74,6 +74,7 @@ describe "Confluence" do
       end
     end
 
+    # TODO Pointless test
     context "with unsuccessful login" do
       it "should raise XMLRPC::FaultException" do
         @confluence.should_receive(:login).with(@user, @pass).and_raise( XMLRPC::FaultException.new(:faultCode, :faultString) )
