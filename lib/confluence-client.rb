@@ -7,12 +7,17 @@ module Confluence # :nodoc:
   #
   #   Confluence::Client.new(url) do |confluence|
   #     
-  #     # Login
-  #     confluence.login(user, pass)
-  #     
-  #     # Logout
-  #     confluence.logout
-  #     
+  #     if confluence.login(user, pass)
+  #       
+  #       # Was last API call successful?
+  #       confluence.ok?
+  #
+  #       # Print error message if error on last API call.
+  #       puts confluence.error if confluence.error?
+  #       
+  #       confluence.logout
+  #     end
+  #
   #   end 
   class Client
 
