@@ -12,6 +12,24 @@
       # Print error message if error on last API call.
       puts confluence.error if confluence.error?
       
+      space = confluence.get_space('foo')
+      if space
+        puts "found space: #{space.inspect}"
+      else
+        space = confluence.add_space( 'foo', 'space name', 'space description' )
+        if space
+          puts "created space: #{space.inspect}"
+        else
+          puts "unable to create space: #{c.error}"
+        end
+      end
+      
+      if confluence.remove_space('foo')
+        puts 'removed space'
+      else
+        puts "unable to remove space: #{c.error}"
+      end
+      
       confluence.logout
     end
 
