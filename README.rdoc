@@ -30,6 +30,19 @@
         puts "unable to remove space: #{c.error}"
       end
       
+      user = confluence.get_user('stan')
+      if user
+        puts "found user: #{user.inspect}"
+      else
+        user = confluence.add_user( 'stan', 'stan has a name', 'stan@example.com' )       
+      end
+      
+      if confluence.remove_user('stan')
+        puts 'removed user'
+      else
+        puts "unable to remove user: #{c.error}"
+      end
+      
       confluence.logout
     end
 

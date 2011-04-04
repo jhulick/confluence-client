@@ -33,6 +33,19 @@ module Confluence # :nodoc:
   #         puts "unable to remove space: #{c.error}"
   #       end
   #       
+  #       user = confluence.get_user('stan')
+  #       if user
+  #         puts "found user: #{user.inspect}"
+  #       else
+  #         user = confluence.add_user( 'stan', 'stan has a name', 'stan@example.com' )       
+  #       end
+  #       
+  #       if confluence.remove_user('stan')
+  #         puts 'removed user'
+  #       else
+  #         puts "unable to remove user: #{c.error}"
+  #       end
+  #       
   #       confluence.logout
   #     end
   #
@@ -63,7 +76,7 @@ module Confluence # :nodoc:
       yield self if block_given?
     end
 
-    # Create Confluence space.  Returns space or nil.
+    # Create Confluence space.  Return space hash or nil.
     #
     # Params:
     # +key+:: Key for space.
@@ -75,18 +88,41 @@ module Confluence # :nodoc:
       nil 
     end
 
+    # Create Confluence user.  Return user hash or nil.
+    #
+    # Params:
+    # +login+:: User login.
+    # +name+:: User name.
+    # +email+:: User email.
+    # +password+:: User password. Defaults to +Time.now.to_i.to_s+.
+    def add_user(login, name, email, password = nil )
+      addUser( { 'email' => email, 'fullname' => name, 'name' => login }, password || Time.now.to_i.to_s )
+      return get_user(login) if ok?
+      nil
+    end
+
     # Was there an error on the last request?
     def error?
       !ok?
     end
 
-    # Return Confluence space or nil.
+    # Return Confluence space hash or nil.
     #
     # Params:
-    # +key+:: Confluence key for space.
+    # +key+:: Fetch this space.
     def get_space(key)
       space = getSpace(key)
       return space if ok?
+      nil
+    end
+
+    # Return Confluence user hash or nil.
+    #
+    # Params:
+    # +login+:: Fetch this user.
+    def get_user(login)
+      user = getUser(login)
+      return user if ok?
       nil
     end
 
@@ -132,6 +168,14 @@ module Confluence # :nodoc:
     # +key+:: Confluence key for space to remove.
     def remove_space(key)
       return removeSpace(key)
+    end
+
+    # Remove Confluence user.  Returns boolean.
+    #
+    # Params:
+    # +login+:: Remove this user.
+    def remove_user(login)
+      return removeUser(login)
     end
 
     # Make the Confluence exceptions more readable.

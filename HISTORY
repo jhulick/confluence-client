@@ -1,3 +1,8 @@
+2011-04-04 v0.0.3
+  - Added 'Confluence#add_user'
+  - Added 'Confluence#get_user'
+  - Added 'Confluence#remove_user'
+
 2011-04-04 v0.0.2
   - Added 'Confluence#add_space'
   - Added 'Confluence#get_space'
