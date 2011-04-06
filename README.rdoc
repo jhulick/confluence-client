@@ -12,6 +12,9 @@
       # Print error message if error on last API call.
       puts confluence.error if confluence.error?
       
+      ##########
+      # Spaces #
+      ##########
       space = confluence.get_space('foo')
       if space
         puts "found space: #{space.inspect}"
@@ -30,6 +33,9 @@
         puts "unable to remove space: #{c.error}"
       end
       
+      #########
+      # Users #
+      #########
       user = confluence.get_user('stan')
       if user
         puts "found user: #{user.inspect}"
@@ -41,6 +47,22 @@
         puts 'removed user'
       else
         puts "unable to remove user: #{c.error}"
+      end
+      
+      #########
+      # Users #
+      #########
+      group = confluence.get_group('some:group')
+      if group
+        puts "found group: #{group.inspect}"
+      else
+        group = confluence.add_group('some:group')
+      end
+
+      if confluence.remove_group('some:group')
+        puts 'removed group'
+      else
+        puts "unable to remove group: #{c.error}"
       end
       
       confluence.logout

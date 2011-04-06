@@ -1,3 +1,8 @@
+2011-04-06 v0.0.4
+  - Added 'Confluence#add_group'
+  - Added 'Confluence#get_group'
+  - Added 'Confluence#remove_group'
+
 2011-04-04 v0.0.3
   - Added 'Confluence#add_user'
   - Added 'Confluence#get_user'

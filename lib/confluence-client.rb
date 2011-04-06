@@ -15,6 +15,9 @@ module Confluence # :nodoc:
   #       # Print error message if error on last API call.
   #       puts confluence.error if confluence.error?
   #       
+  #       ##########
+  #       # Spaces #
+  #       ##########
   #       space = confluence.get_space('foo')
   #       if space
   #         puts "found space: #{space.inspect}"
@@ -33,6 +36,9 @@ module Confluence # :nodoc:
   #         puts "unable to remove space: #{c.error}"
   #       end
   #       
+  #       #########
+  #       # Users #
+  #       #########
   #       user = confluence.get_user('stan')
   #       if user
   #         puts "found user: #{user.inspect}"
@@ -44,6 +50,22 @@ module Confluence # :nodoc:
   #         puts 'removed user'
   #       else
   #         puts "unable to remove user: #{c.error}"
+  #       end
+  #       
+  #       #########
+  #       # Users #
+  #       #########
+  #       group = confluence.get_group('some:group')
+  #       if group
+  #         puts "found group: #{group.inspect}"
+  #       else
+  #         group = confluence.add_group('some:group')
+  #       end
+  #
+  #       if confluence.remove_group('some:group')
+  #         puts 'removed group'
+  #       else
+  #         puts "unable to remove group: #{c.error}"
   #       end
   #       
   #       confluence.logout
@@ -76,6 +98,16 @@ module Confluence # :nodoc:
       yield self if block_given?
     end
 
+    # Create Confluence group.  Returns group hash or nil.
+    #
+    # Params:
+    # +name+:: Group name.
+    def add_group(name)
+      addGroup(name)
+      return { 'name' => name } if ok?
+      return nil
+    end
+
     # Create Confluence space.  Return space hash or nil.
     #
     # Params:
@@ -104,6 +136,19 @@ module Confluence # :nodoc:
     # Was there an error on the last request?
     def error?
       !ok?
+    end
+
+    # Return Confluence group hash or nil.
+    #
+    # Params:
+    # +name+:: Group name.
+    def get_group(name)
+      groups = getGroups
+      if ok?
+        return { 'name' => name } if groups.include?(name)
+        @error = 'group not found'
+      end
+      nil
     end
 
     # Return Confluence space hash or nil.
@@ -160,6 +205,15 @@ module Confluence # :nodoc:
     # Was the last request successful?
     def ok?
       @error.nil?
+    end
+
+    # Remove Confluence group.  Returns boolean.
+    #
+    # Params:
+    # +name+:: Remove group with this name.
+    # +default_group+:: If specified, members of +name+ will be added to this group. Defaults to +''+.
+    def remove_group(name, default_group='')
+      return removeGroup( name, default_group )
     end
 
     # Remove Confluence space.  Returns boolean.
