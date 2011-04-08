@@ -65,6 +65,26 @@
         puts "unable to remove group: #{c.error}"
       end
       
+      ##########
+      # Groups #
+      ##########
+      if confluence.member?('stan', 'some:group')
+        if confluence.remove_user_from_group('stan', 'some:group')
+          puts 'removed user from group'
+        else
+          puts "unable to remove user from group: #{c.error}"
+        end
+      else
+        if confluence.add_user_to_group('stan', 'some:group')
+          puts 'added user to group'
+        else
+          puts "unable to add user to group: #{c.error}"
+        end
+      end
+     
+      ########## 
+      # Logout #
+      ########## 
       confluence.logout
     end
 

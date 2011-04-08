@@ -68,6 +68,26 @@ module Confluence # :nodoc:
   #         puts "unable to remove group: #{c.error}"
   #       end
   #       
+  #       ##########
+  #       # Groups #
+  #       ##########
+  #       if confluence.member?('stan', 'some:group')
+  #         if confluence.remove_user_from_group('stan', 'some:group')
+  #           puts 'removed user from group'
+  #         else
+  #           puts "unable to remove user from group: #{c.error}"
+  #         end
+  #       else
+  #         if confluence.add_user_to_group('stan', 'some:group')
+  #           puts 'added user to group'
+  #         else
+  #           puts "unable to add user to group: #{c.error}"
+  #         end
+  #       end
+  #      
+  #       ########## 
+  #       # Logout #
+  #       ########## 
   #       confluence.logout
   #     end
   #
@@ -106,6 +126,19 @@ module Confluence # :nodoc:
       addGroup(name)
       return { 'name' => name } if ok?
       return nil
+    end
+
+    # Add user to group.  Returns boolean.
+    #
+    # Params:
+    # +user+:: User to add.
+    # +group:: Add user to this group.
+    def add_user_to_group(user, group)
+      if member?(user, group)
+        @error = 'already a member'
+        return false
+      end
+      addUserToGroup(user, group)
     end
 
     # Create Confluence space.  Return space hash or nil.
@@ -186,6 +219,15 @@ module Confluence # :nodoc:
       return ok?
     end
 
+    # Is user a member of this group?  Returns boolean.
+    #
+    # Params:
+    # +user+:: Check membership for this user.
+    # +group+:: Check for membership in this group.
+    def member?(user, group)
+      getUserGroups(user).include?(group)
+    end
+
     def method_missing(method_name, *args)
       unless @token
         @error = "not authenticated"
@@ -230,6 +272,19 @@ module Confluence # :nodoc:
     # +login+:: Remove this user.
     def remove_user(login)
       return removeUser(login)
+    end
+
+    # Remove user from group.  Returns boolean.
+    #
+    # Params:
+    # +user+:: User to remove.
+    # +group+:: Remove user from this group.
+    def remove_user_from_group(user, group)
+      unless member?(user, group)
+        @error = 'not a member'
+        return false
+      end
+      removeUserFromGroup(user, group)
     end
 
     # Make the Confluence exceptions more readable.

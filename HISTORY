@@ -1,17 +1,22 @@
+2011-04-08 v0.0.5
+  - Added 'Client#add_user_to_group'
+  - Added 'Client#member?'
+  - Added 'Client#remove_user_from_group'
+
 2011-04-06 v0.0.4
-  - Added 'Confluence#add_group'
-  - Added 'Confluence#get_group'
-  - Added 'Confluence#remove_group'
+  - Added 'Client#add_group'
+  - Added 'Client#get_group'
+  - Added 'Client#remove_group'
 
 2011-04-04 v0.0.3
-  - Added 'Confluence#add_user'
-  - Added 'Confluence#get_user'
-  - Added 'Confluence#remove_user'
+  - Added 'Client#add_user'
+  - Added 'Client#get_user'
+  - Added 'Client#remove_user'
 
 2011-04-04 v0.0.2
-  - Added 'Confluence#add_space'
-  - Added 'Confluence#get_space'
-  - Added 'Confluence#remove_space'
+  - Added 'Client#add_space'
+  - Added 'Client#get_space'
+  - Added 'Client#remove_space'
   - Improved formatting of Confluence exception messages
 
 2011-04-01 v0.0.1
