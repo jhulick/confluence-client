@@ -81,7 +81,21 @@
           puts "unable to add user to group: #{c.error}"
         end
       end
-     
+      
+      ###############
+      # Permissions #
+      ###############
+      if confluence.add_permission_to_space('Edit', 'stan', 'foo')
+        puts 'added permission to space'
+      else
+        puts "unable to add permission to space: #{c.error}"
+      end
+      if confluence.remove_permission_to_space('View', 'some:group', 'foo')
+        puts 'removed permission from space'
+      else
+        puts "unable to remove permission from space: #{c.error}"
+      end
+      
       ########## 
       # Logout #
       ########## 

@@ -1,3 +1,7 @@
+2011-04-08 v0.0.6
+  - Added 'Client#add_permission_to_space'
+  - Added 'Client#remove_permission_from_space'
+
 2011-04-08 v0.0.5
   - Added 'Client#add_user_to_group'
   - Added 'Client#member?'

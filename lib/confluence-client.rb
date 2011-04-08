@@ -84,7 +84,21 @@ module Confluence # :nodoc:
   #           puts "unable to add user to group: #{c.error}"
   #         end
   #       end
-  #      
+  #       
+  #       ###############
+  #       # Permissions #
+  #       ###############
+  #       if confluence.add_permission_to_space('Edit', 'stan', 'foo')
+  #         puts 'added permission to space'
+  #       else
+  #         puts "unable to add permission to space: #{c.error}"
+  #       end
+  #       if confluence.remove_permission_to_space('View', 'some:group', 'foo')
+  #         puts 'removed permission from space'
+  #       else
+  #         puts "unable to remove permission from space: #{c.error}"
+  #       end
+  #       
   #       ########## 
   #       # Logout #
   #       ########## 
@@ -126,6 +140,16 @@ module Confluence # :nodoc:
       addGroup(name)
       return { 'name' => name } if ok?
       return nil
+    end
+
+    # Add permission for entity to space.
+    #
+    # Params:
+    # +permission+:: 'View' or 'Edit'
+    # +entity+:: User or group name.
+    # +space+:: Space key.
+    def add_permission_to_space(permission, entity, space)
+      addPermissionToSpace(permission, entity, space)      
     end
 
     # Add user to group.  Returns boolean.
@@ -255,7 +279,17 @@ module Confluence # :nodoc:
     # +name+:: Remove group with this name.
     # +default_group+:: If specified, members of +name+ will be added to this group. Defaults to +''+.
     def remove_group(name, default_group='')
-      return removeGroup( name, default_group )
+      removeGroup( name, default_group )
+    end
+
+    # Remove permission for entity from space.
+    #
+    # Params:
+    # +permission+:: 'View' or 'Edit'
+    # +entity+:: User or group name.
+    # +space+:: Space key.
+    def remove_permission_from_space(permission, entity, space)
+      removePermissionFromSpace(permission, entity, space)      
     end
 
     # Remove Confluence space.  Returns boolean.
@@ -263,7 +297,7 @@ module Confluence # :nodoc:
     # Params:
     # +key+:: Confluence key for space to remove.
     def remove_space(key)
-      return removeSpace(key)
+      removeSpace(key)
     end
 
     # Remove Confluence user.  Returns boolean.
@@ -271,7 +305,7 @@ module Confluence # :nodoc:
     # Params:
     # +login+:: Remove this user.
     def remove_user(login)
-      return removeUser(login)
+      removeUser(login)
     end
 
     # Remove user from group.  Returns boolean.
