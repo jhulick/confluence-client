@@ -1,4 +1,4 @@
-2011-??-?? v0.0.7
+2011-05-03 v0.0.7
   - Improved error reporting
   - Better validation of space keys in 'Confluence::Client#add_space'
 
