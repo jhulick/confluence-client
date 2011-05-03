@@ -121,8 +121,8 @@ module Confluence # :nodoc:
       raise ArgumentError if url.nil? || url.empty?
       url += '/rpc/xmlrpc' unless url =~ /\/rpc\/xmlrpc$/
       @server         = XMLRPC::Client.new2(url)
-      @server.timeout = 305                                 # XXX 
-      @confluence     = @server.proxy_async('confluence1')  # XXX
+      #@server.timeout = 305                          # XXX 
+      @confluence     = @server.proxy('confluence1')  # XXX
 
       @error          = nil
       @password       = nil
@@ -172,8 +172,12 @@ module Confluence # :nodoc:
     # +name+:: Name of space.
     # +description+:: Description for space.
     def add_space(key, name, description)
-      space = addSpace( { 'key' => key, 'name' => name, 'description' => description } )
-      return space if ok?
+      if key =~ /^[a-zA-Z0-9]*$/
+        space = addSpace( { 'key' => key, 'name' => name, 'description' => description } )
+        return space if ok?
+      else
+        @error = 'space keys may only contain [a-zA-Z0-9]'
+      end
       nil 
     end
 
@@ -240,7 +244,6 @@ module Confluence # :nodoc:
       rescue => e
         @error = tidy_exception( e.message )
       end
-      @error = 'could not login for some reason' if @error.nil? && @token.nil?
       return ok?
     end
 
@@ -328,6 +331,7 @@ module Confluence # :nodoc:
     # +txt+:: Exception text to clean up.
     def tidy_exception(txt)
       txt.gsub!( /^java.lang.Exception: com.atlassian.confluence.rpc.RemoteException:\s+/, '' )
+      txt ||= 'unknown exception'
     end
 
   end # class Client
