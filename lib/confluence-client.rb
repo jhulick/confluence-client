@@ -240,6 +240,7 @@ module Confluence # :nodoc:
       rescue => e
         @error = tidy_exception( e.message )
       end
+      @error = 'could not login for some reason' if @error.nil? && @token.nil?
       return ok?
     end
 

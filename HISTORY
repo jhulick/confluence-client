@@ -1,3 +1,6 @@
+2011-??-?? v0.0.7
+  - Improved error reporting
+
 2011-04-08 v0.0.6
   - Added 'Client#add_permission_to_space'
   - Added 'Client#remove_permission_from_space'
