@@ -121,6 +121,9 @@ module Confluence # :nodoc:
       raise ArgumentError if url.nil? || url.empty?
       url += '/rpc/xmlrpc' unless url =~ /\/rpc\/xmlrpc$/
       @server         = XMLRPC::Client.new2(url)
+      # TODO Ugly, ugly hack!
+      # http://stackoverflow.com/questions/4748633/how-can-i-make-rubys-xmlrpc-client-ignore-ssl-certificate-errors
+      @server.instance_variable_get(:@http).instance_variable_set(:@verify_mode, OpenSSL::SSL::VERIFY_NONE)
       #@server.timeout = 305                          # XXX 
       @confluence     = @server.proxy('confluence1')  # XXX
 

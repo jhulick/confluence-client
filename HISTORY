@@ -1,3 +1,6 @@
+2011-06-02 v0.0.8
+  - Don't verify SSL certificates. (Yes, this is a hack.)
+
 2011-05-03 v0.0.7
   - Improved error reporting
   - Better validation of space keys in 'Confluence::Client#add_space'
