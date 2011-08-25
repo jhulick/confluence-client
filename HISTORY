@@ -1,3 +1,6 @@
+YYYY-MM-DD vX.Y.Z
+  - Added `eg/get_permissions_for_user.rb`
+
 2011-06-02 v0.0.8
   - Don't verify SSL certificates. (Yes, this is a hack.)
 
